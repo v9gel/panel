@@ -372,4 +372,9 @@ textarea {
   
 html {
     font-family: "Roboto", sans-serif;
+    letter-spacing: 2.16px;
+    font-size: 18px;
+    font-weight: 400;
+    box-sizing: border-box;
+    color: #000000;
 }
