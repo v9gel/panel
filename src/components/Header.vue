@@ -8,7 +8,7 @@ import Checkbox from "./ui/Checkbox.vue";
   <div class="header">
     <Input class="element" />
     <Checkbox class="element1" />
-    <Button class="element2" />
+    <Button class="element2">Показать всех</Button>
   </div>
 </template>
 

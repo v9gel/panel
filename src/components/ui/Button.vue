@@ -4,7 +4,7 @@ const value = ref("Player");
 </script>
 
 <template>
-  <button>{{ "Показать всех" }}</button>
+  <button><slot></slot></button>
 </template>
 
 <style scoped lang="less">
