@@ -78,7 +78,9 @@ export default createStore({
       }
 
       if (state.searchText !== "") {
-        return filtredOnline.filter((e) => e.name.includes(state.searchText));
+        return filtredOnline.filter((e) =>
+          e.name.toLowerCase().includes(state.searchText.toLowerCase())
+        );
       }
 
       return filtredOnline;
