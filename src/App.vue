@@ -35,4 +35,9 @@ const visiblePlayers = computed({
 .table {
   margin-top: 25px;
 }
+
+.active:hover {
+  cursor: pointer;
+  background-color: #c6c6c6;
+}
 </style>

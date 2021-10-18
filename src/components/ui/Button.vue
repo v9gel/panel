@@ -4,7 +4,7 @@ const value = ref("Player");
 </script>
 
 <template>
-  <button><slot></slot></button>
+  <button class="active"><slot></slot></button>
 </template>
 
 <style scoped lang="less">

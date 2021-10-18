@@ -15,10 +15,10 @@ const hidePlayer = (id) => {
     class="context-menu"
     v-bind:style="{ top: position.y + 'px', left: position.x + 'px' }"
   >
-    <li class="element-menu" @click="showPopup(playerId)">
+    <li class="element-menu active" @click="showPopup(playerId)">
       <div class="text">Показать профиль</div>
     </li>
-    <li class="element-menu" @click="hidePlayer(playerId)">
+    <li class="element-menu active" @click="hidePlayer(playerId)">
       <div class="text">Скрыть игрока</div>
     </li>
   </ul>
@@ -28,13 +28,9 @@ const hidePlayer = (id) => {
 .element-menu {
   display: flex;
 
-  width: fit-content;
-  //   text-align: center;
+  width: calc(100% - 44px);
   padding: 22px;
   justify-content: center;
-
-  .text {
-  }
 }
 
 .element-menu + .element-menu {
@@ -52,5 +48,13 @@ const hidePlayer = (id) => {
   border-radius: 10px;
   background-color: #e2e2e2;
   z-index: 5;
+}
+
+.element-menu:first-child {
+  border-radius: 10px 10px 0px 0px;
+}
+
+.element-menu:last-child {
+  border-radius: 0px 0px 10px 10px;
 }
 </style>
