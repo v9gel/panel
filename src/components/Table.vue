@@ -32,7 +32,7 @@ emitter.on("hide-context-menu", () => (contextMenuVisible.value = false));
           <th>Онлайн</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody v-if="players.length > 0">
         <tr
           v-for="(player, index) in players"
           :key="index"
@@ -45,6 +45,7 @@ emitter.on("hide-context-menu", () => (contextMenuVisible.value = false));
           <td><Status :online="player.online"></Status></td>
         </tr>
       </tbody>
+      <tbody v-if="players.length === 0" class="not-found">Игроки не найдены</tbody>
     </table>
     <ContextMenu
       v-if="contextMenuVisible"
@@ -89,6 +90,12 @@ table {
     height: 400px;
     overflow-y: auto;
     overflow-x: hidden;
+  }
+
+  .not-found {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   thead tr {
