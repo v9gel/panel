@@ -23,7 +23,6 @@ emitter.on("hide-popup", (e) => {
 </script>
 
 <template>
-  <!-- <div class="wrapper" v-if="visiblePopup" @click="hidePopup"> -->
   <div class="popup" v-if="visiblePopup">
     <div class="status">{{ player.online ? "Онлайн" : "Офлайн" }}</div>
     <div class="name">
@@ -32,7 +31,6 @@ emitter.on("hide-popup", (e) => {
     </div>
     <Button class="button" @click="hidePopup">ЗАКРЫТЬ</Button>
   </div>
-  <!-- </div> -->
 </template>
 
 <style scoped lang="less">
@@ -67,8 +65,12 @@ emitter.on("hide-popup", (e) => {
   margin-top: 17px;
 
   h1 {
+    width: 300px;
     font-size: 48px;
     letter-spacing: 5.76px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
