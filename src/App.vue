@@ -25,6 +25,7 @@ const visiblePlayers = computed({
   margin-right: 120px;
   margin-bottom: 52px;
   user-select: none;
+  min-width: 960px;
 }
 
 .table {

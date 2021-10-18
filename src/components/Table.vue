@@ -19,31 +19,50 @@ const showContextMenu = (e) => {
 <template>
   <div>
     <table cellpadding="4" cellspacing="4">
-      <tr class="head">
-        <th>ID</th>
-        <th>Имя</th>
-        <th>Уровень</th>
-        <th>Онлайн</th>
-      </tr>
-      <tr
-        v-for="(player, index) in players"
-        :key="index"
-        class="data"
-        @mousedown="showContextMenu"
-      >
-        <td class="id">{{ player.id }}</td>
-        <td>{{ player.name }}</td>
-        <td><Stars :count="player.level" /></td>
-        <td><Status :online="player.online"></Status></td>
-      </tr>
+      <thead>
+        <tr class="head">
+          <th>ID</th>
+          <th>Имя</th>
+          <th>Уровень</th>
+          <th>Онлайн</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          v-for="(player, index) in players"
+          :key="index"
+          class="data"
+          @mousedown="showContextMenu"
+        >
+          <td class="id">{{ player.id }}</td>
+          <td>{{ player.name }}</td>
+          <td><Stars :count="player.level" /></td>
+          <td><Status :online="player.online"></Status></td>
+        </tr>
+      </tbody>
     </table>
     <!-- <ContextMenu :point="point"></ContextMenu> -->
   </div>
 </template>
 
 <style scoped lang="less">
-* {
-  box-sizing: content-box;
+*::-webkit-scrollbar {
+  width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+  background-color: #b9b9b9;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: #464646;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 table {
@@ -51,27 +70,44 @@ table {
   border: 5px solid #e2e2e2;
   width: 100%;
 
-  td,
-  th {
-    // display: flex;
-    vertical-align: middle;
-  }
-  .head {
-    background-color: #c6c6c6;
-    border-bottom: 15px solid #e2e2e2;
-    height: 46px;
-    text-align: left;
+  thead,
+  tbody {
+    display: grid;
   }
 
-  .data {
+  tbody {
+    margin-top: 20px;
+    height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  thead tr {
+    background-color: #c6c6c6;
+    height: 46px;
+    text-align: left;
+    padding-right: 8px;
+  }
+
+  tbody tr + tr {
+    margin-top: 4px;
+  }
+
+  tbody tr {
     background-color: #d3d3d3;
-    border-top: 2px solid #e2e2e2;
     height: 42px;
   }
 
-  //   .data .id {
-  //     text-align: right;
-  //     width: 150px;
-  //   }
+  tr {
+    display: grid;
+    align-items: center;
+    padding-left: 8px;
+    grid-template-columns: 1fr 3fr 1fr 1fr;
+  }
+
+  .id {
+    text-align: right;
+    padding-right: calc(100% - 20px);
+  }
 }
 </style>
