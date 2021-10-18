@@ -1,6 +1,16 @@
 <script setup>
-import { ref } from "vue";
-const value = ref("Player");
+import { defineProps, toRefs, defineEmits, computed } from "vue";
+const props = defineProps({ modelValue: String });
+const emit = defineEmits(["update:modelValue"]);
+
+const value = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(value) {
+    emit("update:modelValue", value);
+  },
+});
 </script>
 
 <template>

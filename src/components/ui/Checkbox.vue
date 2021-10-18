@@ -1,6 +1,16 @@
 <script setup>
-import { ref } from "vue";
-const value = ref(true);
+import { defineProps, toRefs, defineEmits, computed } from "vue";
+const props = defineProps({ modelValue: Boolean });
+const emit = defineEmits(["update:modelValue"]);
+
+const value = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(value) {
+    emit("update:modelValue", value);
+  },
+});
 </script>
 
 <template>
