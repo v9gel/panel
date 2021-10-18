@@ -15,8 +15,8 @@ const hidePlayer = (id) => {
     class="context-menu"
     v-bind:style="{ top: position.y + 'px', left: position.x + 'px' }"
   >
-    <li class="element-menu">
-      <div class="text" @click="showPopup(playerId)">Показать профиль</div>
+    <li class="element-menu" @click="showPopup(playerId)">
+      <div class="text">Показать профиль</div>
     </li>
     <li class="element-menu" @click="hidePlayer(playerId)">
       <div class="text">Скрыть игрока</div>
@@ -51,6 +51,6 @@ const hidePlayer = (id) => {
   box-shadow: 0 10px 16px 1px rgba(0, 0, 0, 0.21);
   border-radius: 10px;
   background-color: #e2e2e2;
-  z-index: 1;
+  z-index: 5;
 }
 </style>
