@@ -1,8 +1,10 @@
 <script setup>
-import { computed } from "@vue/reactivity";
+import { computed, ref } from "@vue/reactivity";
 import Header from "./components/Header.vue";
 import Table from "./components/Table.vue";
 import store from "./store";
+import emitter, { hideContextMenu } from "./emiter";
+import Popup from "./components/Popup.vue";
 
 const visiblePlayers = computed({
   get() {
@@ -12,9 +14,10 @@ const visiblePlayers = computed({
 </script>
 
 <template>
-  <div class="app">
+  <div class="app" @click="hideContextMenu">
     <Header />
-    <Table :players="visiblePlayers" class="table"></Table>
+    <Table :players="visiblePlayers" class="table" />
+    <Popup />
   </div>
 </template>
 
@@ -26,6 +29,7 @@ const visiblePlayers = computed({
   margin-bottom: 52px;
   user-select: none;
   min-width: 960px;
+  position: relative;
 }
 
 .table {

@@ -1,16 +1,26 @@
 <script setup>
 import { ref, defineProps, toRefs } from "vue";
-const props = defineProps({ point: Object });
-const { point } = toRefs(props);
+import { showPopup } from "../emiter";
+import store from "../store";
+const props = defineProps({ position: Object, playerId: String });
+const { position, playerId } = toRefs(props);
+
+const hidePlayer = (id) => {
+  store.commit("hidePlayer", { id });
+};
 </script>
 
 <template>
   <ul
     class="context-menu"
-    v-bind:style="{ top: point.y + 'px', left: point.x + 'px' }"
+    v-bind:style="{ top: position.y + 'px', left: position.x + 'px' }"
   >
-    <li class="element-menu"><div class="text">Показать профиль</div></li>
-    <li class="element-menu"><div class="text">Скрыть игрока</div></li>
+    <li class="element-menu">
+      <div class="text" @click="showPopup(playerId)">Показать профиль</div>
+    </li>
+    <li class="element-menu" @click="hidePlayer(playerId)">
+      <div class="text">Скрыть игрока</div>
+    </li>
   </ul>
 </template>
 

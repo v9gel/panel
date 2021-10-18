@@ -63,6 +63,14 @@ export default createStore({
     visibleAll(state) {
       state.onlyOnline = false;
       state.searchText = "";
+
+      state.players = state.players.map((e) => {
+        e.hidden = undefined;
+        return e;
+      });
+    },
+    hidePlayer(state, { id }) {
+      state.players.find((e) => e.id === id).hidden = true;
     },
   },
   getters: {
@@ -77,13 +85,16 @@ export default createStore({
         filtredOnline = state.players;
       }
 
+      let filtredText;
       if (state.searchText !== "") {
-        return filtredOnline.filter((e) =>
+        filtredText = filtredOnline.filter((e) =>
           e.name.toLowerCase().includes(state.searchText.toLowerCase())
         );
+      } else {
+        filtredText = filtredOnline;
       }
 
-      return filtredOnline;
+      return filtredText.filter((e) => e.hidden === undefined);
     },
   },
   actions: {},

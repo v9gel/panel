@@ -3,17 +3,22 @@ import { defineProps, toRefs, ref } from "vue";
 import Stars from "./ui/Stars.vue";
 import Status from "./ui/Status.vue";
 import ContextMenu from "./ContextMenu.vue";
+import emitter from "../emiter";
 const props = defineProps({ players: [] });
 const { players } = toRefs(props);
 
+const contextMenuVisible = ref(false);
 const point = ref({ x: 0, y: 0 });
+const selectedPlayerId = ref("");
+const showContextMenu = (e, id) => {
+  contextMenuVisible.value = true;
+  selectedPlayerId.value = id;
+  // console.log(e.target.getBoundingClientRect());
 
-const showContextMenu = (e) => {
-  if (e.button === 2) {
-    point.value = { x: e.clientX, y: e.clientY };
-    console.log(e);
-  }
+  point.value = { x: e.clientX, y: e.clientY };
 };
+
+emitter.on("hide-context-menu", () => (contextMenuVisible.value = false));
 </script>
 
 <template>
@@ -32,7 +37,7 @@ const showContextMenu = (e) => {
           v-for="(player, index) in players"
           :key="index"
           class="data"
-          @mousedown="showContextMenu"
+          @mousedown.right="showContextMenu($event, player.id)"
         >
           <td class="id">{{ player.id }}</td>
           <td>{{ player.name }}</td>
@@ -41,7 +46,11 @@ const showContextMenu = (e) => {
         </tr>
       </tbody>
     </table>
-    <!-- <ContextMenu :point="point"></ContextMenu> -->
+    <ContextMenu
+      v-if="contextMenuVisible"
+      :position="point"
+      :playerId="selectedPlayerId"
+    ></ContextMenu>
   </div>
 </template>
 
