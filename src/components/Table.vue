@@ -13,9 +13,7 @@ const selectedPlayerId = ref("");
 const showContextMenu = (e, id) => {
   contextMenuVisible.value = true;
   selectedPlayerId.value = id;
-  // console.log(e.target.getBoundingClientRect());
-
-  point.value = { x: e.clientX, y: e.clientY };
+  point.value = { x: e.clientX - 120, y: e.target.offsetTop, target: e.target };
 };
 
 emitter.on("hide-context-menu", () => (contextMenuVisible.value = false));
@@ -26,7 +24,7 @@ emitter.on("hide-context-menu", () => (contextMenuVisible.value = false));
     <table cellpadding="4" cellspacing="4">
       <thead>
         <tr class="head">
-          <th>ID</th>
+          <th>ID></th>
           <th>Имя</th>
           <th>Уровень</th>
           <th>Онлайн</th>
@@ -44,14 +42,16 @@ emitter.on("hide-context-menu", () => (contextMenuVisible.value = false));
           <td><Stars :count="player.level" /></td>
           <td><Status :online="player.online"></Status></td>
         </tr>
+        <ContextMenu
+          v-if="contextMenuVisible"
+          :position="point"
+          :playerId="selectedPlayerId"
+        ></ContextMenu>
       </tbody>
-      <tbody v-if="players.length === 0" class="not-found">Игроки не найдены</tbody>
+      <tbody v-if="players.length === 0" class="not-found">
+        Игроки не найдены
+      </tbody>
     </table>
-    <ContextMenu
-      v-if="contextMenuVisible"
-      :position="point"
-      :playerId="selectedPlayerId"
-    ></ContextMenu>
   </div>
 </template>
 
@@ -86,6 +86,7 @@ table {
   }
 
   tbody {
+    position: relative;
     margin-top: 20px;
     height: 400px;
     overflow-y: auto;

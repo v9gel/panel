@@ -3,7 +3,7 @@ import { ref, defineProps, toRefs } from "vue";
 import { showPopup } from "../emiter";
 import store from "../store";
 const props = defineProps({ position: Object, playerId: String });
-const { position, playerId } = toRefs(props);
+const { position, playerId, target } = toRefs(props);
 
 const hidePlayer = (id) => {
   store.commit("hidePlayer", { id });
