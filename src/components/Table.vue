@@ -120,6 +120,7 @@ table {
   thead,
   tbody {
     display: grid;
+    grid-auto-rows: min-content;
   }
 
   tbody {
