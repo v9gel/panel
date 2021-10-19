@@ -31,8 +31,8 @@ const visibleAll = () => {
 <template>
   <div class="header">
     <Input class="element" v-model="searchText" />
-    <Checkbox class="element1" v-model="onlyOnline" />
-    <Button class="element2" @click="visibleAll">Показать всех</Button>
+    <Checkbox class="element" v-model="onlyOnline" />
+    <Button class="element" @click="visibleAll">Показать всех</Button>
   </div>
 </template>
 
@@ -42,15 +42,7 @@ const visibleAll = () => {
   align-items: center;
 }
 
-// .element + .element {
-//   margin-left: 15px;
-// }
-
-.element1 {
-  margin-left: 15px;
-}
-
-.element2 {
-  margin-left: 43px;
+.element + .element {
+  margin-left: 50px;
 }
 </style>
