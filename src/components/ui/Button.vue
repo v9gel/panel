@@ -1,7 +1,4 @@
-<script setup>
-import { ref } from "vue";
-const value = ref("Player");
-</script>
+<script setup></script>
 
 <template>
   <button class="active"><slot></slot></button>

@@ -13,4 +13,8 @@ export const hidePopup = () => {
   emitter.emit("hide-popup");
 };
 
+export const changeSort = (sortedColumn, currentSort) => {
+  emitter.emit("change-sort", { sortedColumn, currentSort });
+};
+
 export default emitter;

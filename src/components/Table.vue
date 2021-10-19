@@ -1,11 +1,15 @@
 <script setup>
-import { defineProps, toRefs, ref } from "vue";
+import { defineProps, toRefs, ref, computed } from "vue";
 import Stars from "./ui/Stars.vue";
 import Status from "./ui/Status.vue";
 import ContextMenu from "./ContextMenu.vue";
 import emitter from "../emiter";
+import HeadSorter from "./HeadSorter.vue";
+import { nextSort, SORT } from "../common/sort";
 const props = defineProps({ players: [] });
 const { players } = toRefs(props);
+const sortedColumn = ref("");
+const sortType = ref(SORT.NONE);
 
 const contextMenuVisible = ref(false);
 const point = ref({ x: 0, y: 0 });
@@ -17,6 +21,36 @@ const showContextMenu = (e, id) => {
 };
 
 emitter.on("hide-context-menu", () => (contextMenuVisible.value = false));
+
+emitter.on("change-sort", (event) => {
+  sortType.value = nextSort(event.currentSort);
+  sortedColumn.value = event.sortedColumn;
+});
+
+const sortedPlayers = (type, col) => {
+  const tempPlayers = [...players.value];
+
+  if (type === SORT.NONE) {
+    return tempPlayers.reverse();
+  }
+
+  const splayers = tempPlayers.sort((a, b) => {
+    if (a[col] < b[col]) {
+      return col === 1;
+    }
+    if (a[col] > b[col]) {
+      return -1;
+    }
+
+    return 0;
+  });
+
+  if (type === SORT.MIN_MAX) {
+    return splayers;
+  }
+
+  return splayers.reverse();
+};
 </script>
 
 <template>
@@ -24,15 +58,18 @@ emitter.on("hide-context-menu", () => (contextMenuVisible.value = false));
     <table cellpadding="4" cellspacing="4">
       <thead>
         <tr class="head">
-          <th>ID></th>
-          <th>Имя</th>
-          <th>Уровень</th>
-          <th>Онлайн</th>
+          <th><HeadSorter column="id"> ID </HeadSorter></th>
+          <th><HeadSorter column="name"> Имя </HeadSorter></th>
+          <th><HeadSorter column="level"> Уровень </HeadSorter></th>
+          <th><HeadSorter column="online"> Онлайн </HeadSorter></th>
         </tr>
       </thead>
       <tbody v-if="players.length > 0">
         <tr
-          v-for="(player, index) in players"
+          v-for="(player, index) in sortedPlayers(
+            sortType,
+            sortedColumn
+          ).reverse()"
           :key="index"
           class="data"
           @mousedown.right="showContextMenu($event, player.id)"
